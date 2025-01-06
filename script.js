@@ -13,6 +13,8 @@ var computerScore = 0
 var playerChoice
 var roundActive = false
 
+
+
 function setPlayerChoice(choice) {
 	if (roundActive) {
 		return
@@ -68,17 +70,16 @@ function playRound() {
 }
 
 function createVisuals(computerChoice, playerChoice, outcome) {
-	//start animation
-	for (let hand of hands) {
-		hand.classList.add("animation")
-	}
 	//disable buttons
 	for (let button of playerButtons) {
 		button.classList.add("disabled")
 	}
-
-	//wait for animation to finish
-	setTimeout(() => {
+	//start animation and 
+	for (let hand of hands) {
+		hand.classList.add("animation")
+	}
+	// add listener to animations & reset the round
+	hands[ 1 ].addEventListener("animationend", () => {
 		//set images
 		hands[ 0 ].src = `assets/${computerChoice}_opponent.svg`
 		hands[ 1 ].src = `assets/${playerChoice}.svg`
@@ -106,7 +107,7 @@ function createVisuals(computerChoice, playerChoice, outcome) {
 			roundCount++
 			roundActive = false
 		}
-
-	}, 2000)
+	})
+	
+	
 }
-
