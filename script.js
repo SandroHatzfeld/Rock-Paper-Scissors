@@ -9,23 +9,13 @@ const playerHand = document.getElementById("playerHand")
 const playerColorInput = document.getElementById("playerColorInput")
 const root = document.querySelector(":root")
 
-
+// Setup base variables
 var roundCount = 1
 var roundWinner
 var playerScore = 0
 var computerScore = 0
 var playerChoice
 var roundActive = false
-
-// change wristband of computer to random color
-function changeComputerColor() {
-	const saturation = 80
-	const brightness = Math.random()*100
-	let hue = Math.random()*360
-	let color = `hsl(${hue} ${saturation}% ${brightness}%)`
-	
-	root.style.setProperty('--computerColor', color)
-}
 
 // called by pressing the button
 function setPlayerChoice(choice) {
@@ -149,6 +139,19 @@ function setActiveHand(target, hand) {
 	}
 }
 
+// auto update visual when inputting color
 playerColorInput.addEventListener("input", (event) => {
 	root.style.setProperty("--playerColor", event.target.value)
 })
+
+
+
+// change wristband of computer to random color
+function changeBandColor(target) {
+	const saturation = 80
+	const brightness = Math.random()*100
+	let hue = Math.random()*360
+	let color = `hsl(${hue} ${saturation}% ${brightness}%)`
+	
+	root.style.setProperty(target, color)
+}

@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body onload="changeComputerColor()">
+<body onload="changeBandColor('--computerColor')">
   <div id="wrapper">
     <div id="container">
       <h1>Rock&nbsp;&nbsp;Paper&nbsp;&nbsp;Scissors</h1>
@@ -226,7 +226,17 @@
             </svg>
 
           </div>
-          <img width="120px" src="assets/VS.svg" alt="" id="versus">
+          <svg width="120px" viewBox="0 0 468 342" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+            <g transform="matrix(1,0,0,1,-306,-2770)">
+                <rect id="VS" x="0" y="2401" width="1080" height="1080" style="fill:none;"/>
+                <g id="VS1" serif:id="VS">
+                    <g transform="matrix(15.9072,0,-5.52546,15.9072,10449.6,-42402.5)">
+                        <path d="M367.046,2841.01L364.538,2859.98L357.05,2859.98L354.202,2841.01L359.405,2841.01C360.007,2846.24 360.436,2850.65 360.694,2854.26C360.952,2850.61 361.221,2847.37 361.503,2844.54L361.843,2841.01L367.046,2841.01Z" style="fill:#fff;fill-rule:nonzero;stroke:#000;stroke-width:1.49px;"/>
+                        <path d="M378.343,2846.75L373.761,2846.75L373.761,2845.35C373.761,2844.69 373.702,2844.27 373.585,2844.09C373.468,2843.91 373.272,2843.82 372.999,2843.82C372.702,2843.82 372.475,2843.94 372.319,2844.18C372.171,2844.43 372.096,2844.79 372.096,2845.29C372.096,2845.92 372.182,2846.4 372.354,2846.72C372.518,2847.04 372.983,2847.42 373.749,2847.88C375.944,2849.18 377.327,2850.25 377.897,2851.09C378.468,2851.92 378.753,2853.27 378.753,2855.13C378.753,2856.48 378.593,2857.48 378.272,2858.12C377.96,2858.76 377.35,2859.3 376.444,2859.74C375.538,2860.16 374.483,2860.38 373.28,2860.38C371.96,2860.38 370.831,2860.13 369.893,2859.63C368.964,2859.13 368.354,2858.49 368.065,2857.72C367.776,2856.95 367.632,2855.85 367.632,2854.43L367.632,2853.18L372.214,2853.18L372.214,2855.49C372.214,2856.2 372.276,2856.66 372.401,2856.86C372.534,2857.07 372.764,2857.17 373.093,2857.17C373.421,2857.17 373.663,2857.04 373.819,2856.78C373.983,2856.53 374.065,2856.14 374.065,2855.63C374.065,2854.52 373.913,2853.79 373.608,2853.44C373.296,2853.1 372.526,2852.53 371.3,2851.72C370.073,2850.91 369.261,2850.32 368.862,2849.95C368.464,2849.58 368.132,2849.08 367.866,2848.43C367.608,2847.78 367.479,2846.95 367.479,2845.94C367.479,2844.49 367.663,2843.43 368.03,2842.76C368.405,2842.08 369.007,2841.56 369.835,2841.18C370.663,2840.8 371.663,2840.61 372.835,2840.61C374.116,2840.61 375.206,2840.82 376.104,2841.23C377.011,2841.65 377.608,2842.17 377.897,2842.8C378.194,2843.43 378.343,2844.49 378.343,2846L378.343,2846.75Z" style="fill:#fff;fill-rule:nonzero;stroke:#000;stroke-width:1.49px;"/>
+                    </g>
+                </g>
+            </g>
+        </svg>
           <div id="playerHand" class="handWrapper">
             <svg class="hand Paper" viewBox="0 0 1080 1080" version="1.1" xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
@@ -674,7 +684,9 @@
         <button onclick="restartGame()">RESTART</button>
       </div>
       <div id="colorPicker">
-        <label for="playerColor">Set player color</label><input id="playerColorInput" name="playerColor" type="text">
+        <label for="playerColorInput">Set player color</label>
+        <input id="playerColorInput" type="text" placeholder="Enter the desired color">
+        <button id="randomColorButton" onclick="changeBandColor('--playerColor')">Randomize</button>
       </div>
     </div>
   </div>
