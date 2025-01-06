@@ -1,3 +1,7 @@
+:root {
+  --computerColor: #3344ff;
+  --playerColor: #ee4444
+}
 body, h1, h2 ,p {
   margin: 0;
   padding: 0;
@@ -16,6 +20,7 @@ h2 {
   width: 100%;
   height: 100vh;
   background-color: #94adc9;
+  position: relative;
   display: grid;
   place-items: center;
 }
@@ -40,6 +45,13 @@ h2 {
 .hand {
   opacity: 0;
   transform-origin: 100% 100%;
+}
+#computerHand .wristband {
+  fill: var(--computerColor);
+}
+
+#playerHand .wristband, #buttonsWrapper .wristband {
+  fill: var(--playerColor);
 }
 .activeHand {
   opacity: 1;
@@ -119,6 +131,24 @@ h2 {
   padding: 10px 30px;
   width: fit-content;
   border: none;
+  border-radius: 5px;
   font-weight: bold;
 }
 
+#colorPicker {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+#colorPicker label {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+#colorPicker input {
+  padding: 5px;
+}

@@ -6,8 +6,8 @@ const playerButtons = document.getElementsByClassName("buttonContainer")
 const winnerText = document.getElementById("winnerText")
 const computerHand = document.getElementById("computerHand")
 const playerHand = document.getElementById("playerHand")
-
-const computerCoice = [ "Rock", "Paper", "Scissors" ]
+const playerColorInput = document.getElementById("playerColorInput")
+const root = document.querySelector(":root")
 
 
 var roundCount = 1
@@ -17,7 +17,17 @@ var computerScore = 0
 var playerChoice
 var roundActive = false
 
+// change wristband of computer to random color
+function changeComputerColor() {
+	const saturation = 80
+	const brightness = Math.random()*100
+	let hue = Math.random()*360
+	let color = `hsl(${hue} ${saturation}% ${brightness}%)`
+	
+	root.style.setProperty('--computerColor', color)
+}
 
+// called by pressing the button
 function setPlayerChoice(choice) {
 	if (roundActive) {
 		return
@@ -27,14 +37,15 @@ function setPlayerChoice(choice) {
 	setActiveHand(computerHand, "Rock")
 	setActiveHand(playerHand, "Rock")
 
-	if (playerScore < 3 || computerScore < 3) {
-		toggleButtons()
-		toggleHandAnimation()
-	}
+	toggleButtons()
+	toggleHandAnimation()
+	
 	roundActive = true
 }
 
+// random return of the choice
 function getComputerChoice() {
+	const computerCoice = [ "Rock", "Paper", "Scissors" ]
 	const max = 3
 	const randomValue = Math.floor(Math.random() * max)
 
@@ -80,13 +91,13 @@ hands[ 0 ].addEventListener("animationend", () => {
 	// set texts and enable the buttons, reset to fists
 	setTextValues(outcome)
 	toggleHandAnimation()
-	toggleButtons()
-
-	// set winner if any score is 3
+	
+	// set winner if any score is 3, otherwise allow next round
 	if (computerScore === 3 || playerScore === 3) {
 		winnerText.innerHTML = `${roundWinner} won after ${roundCount} rounds!`
 		winnerText.parentElement.style.opacity = 1
 	} else {
+		toggleButtons()
 		roundCount++
 		roundActive = false
 	}
@@ -100,6 +111,8 @@ function restartGame() {
 	roundActive = false
 	setTextValues("Let's play!")
 	winnerText.parentElement.style.opacity = 0
+	setActiveHand(computerHand, "Rock")
+	setActiveHand(playerHand, "Rock")
 }
 
 //toggle animations of hands
@@ -118,7 +131,6 @@ function toggleButtons() {
 	}
 }
 
-
 // set texts
 function setTextValues(outcome) {
 	roundInfo.innerHTML = `Round ${roundCount}: ${outcome}`
@@ -126,6 +138,7 @@ function setTextValues(outcome) {
 	playerCounter.innerHTML = playerScore
 }
 
+// set the chosen hand as active
 function setActiveHand(target, hand) {
 	for (child of target.children) {
 		child.classList.remove("activeHand")
@@ -135,3 +148,7 @@ function setActiveHand(target, hand) {
 		}
 	}
 }
+
+playerColorInput.addEventListener("input", (event) => {
+	root.style.setProperty("--playerColor", event.target.value)
+})
