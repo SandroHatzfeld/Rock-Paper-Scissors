@@ -8,6 +8,7 @@ const winnerText = document.getElementById("winnerText")
 const computerCoice = [ "rock", "paper", "scissors" ]
 
 var roundCount = 1
+var roundWinner
 var playerScore = 0
 var computerScore = 0
 var playerChoice
@@ -25,7 +26,8 @@ function setPlayerChoice(choice) {
 	hands[ 1 ].src = `assets/rock.svg`
 
 	if (playerScore < 3 || computerScore < 3) {
-		playRound()
+		toggleButtons()
+		toggleHandAnimation()
 	}
 	roundActive = true
 }
@@ -43,13 +45,15 @@ function calculateRound(computerChoice, playerChoice) {
 		return "Its a Tie! Nobody gets a point"
 	}
 
+	// check if player won
 	if (
 		(playerChoice === "rock" && computerChoice === "scissors") ||
 		(playerChoice === "paper" && computerChoice === "rock") ||
 		(playerChoice === "scissors" && computerChoice === "paper")
 	) {
 		playerScore++
-		return `You won! ${playerChoice} beats ${computerChoice}`
+		roundWinner = "Player"
+		return `${roundWinner} won! ${playerChoice} beats ${computerChoice}`
 	}
 
 	if (
@@ -58,56 +62,61 @@ function calculateRound(computerChoice, playerChoice) {
 		(computerChoice === "scissors" && playerChoice === "paper")
 	) {
 		computerScore++
-		return `You lost! ${computerChoice} beats ${playerChoice}`
+		roundWinner = "Computer"
+		return `${roundWinner} won! ${computerChoice} beats ${playerChoice}`
 	}
 }
 
-function playRound() {
+// add listener to animations & reset the round
+hands[ 1 ].addEventListener("animationend", () => {
 	let computerChoice = getComputerChoice()
 	let outcome = calculateRound(computerChoice, playerChoice)
 
-	createVisuals(computerChoice, playerChoice, outcome)
+	//set images
+	hands[ 0 ].src = `assets/${computerChoice}_opponent.svg`
+	hands[ 1 ].src = `assets/${playerChoice}.svg`
+
+	
+	setTextValues(outcome)
+	toggleHandAnimation()
+	toggleButtons()
+
+	// set winner if any score is 3
+	if (computerScore === 3 || playerScore === 3) {
+		winnerText.innerHTML = `${roundWinner} won after ${roundCount} rounds!`
+		winnerText.parentElement.style.opacity = 1
+	} else {
+		roundCount++
+		roundActive = false
+	}
+})
+
+function resetGame() {
+	roundCount = 1
+	playerScore = 0
+	computerScore = 0
+	roundActive = false
+	setTextValues("Let's play!")
+	winnerText.parentElement.style.opacity = 0
 }
 
-function createVisuals(computerChoice, playerChoice, outcome) {
-	//disable buttons
-	for (let button of playerButtons) {
-		button.classList.add("disabled")
-	}
-	//start animation and 
+function toggleHandAnimation() {
+	// toggle animation class
 	for (let hand of hands) {
-		hand.classList.add("animation")
+		hand.classList.toggle("animation")
 	}
-	// add listener to animations & reset the round
-	hands[ 1 ].addEventListener("animationend", () => {
-		//set images
-		hands[ 0 ].src = `assets/${computerChoice}_opponent.svg`
-		hands[ 1 ].src = `assets/${playerChoice}.svg`
+}
 
-		// set texts
-		roundInfo.innerHTML = `Round ${roundCount}: ${outcome}`
-		computerCounter.innerHTML = computerScore
-		playerCounter.innerHTML = playerScore
+function toggleButtons() {
+	// toggle disabled class on buttons
+	for (let button of playerButtons) {
+		button.classList.toggle("disabled")
+	}
+}
 
-		// remove animation class
-		for (let hand of hands) {
-			hand.classList.remove("animation")
-		}
-		// remove disabled class on buttons
-		for (let button of playerButtons) {
-			button.classList.remove("disabled")
-		}
-
-		// set winner if any score is 3
-		if (computerScore === 3) {
-			winnerText.innerHTML = `Computer won after ${roundCount} rounds!`
-		} else if (playerScore === 3) {
-			winnerText.innerHTML = `Player won after ${roundCount} rounds!`
-		} else {
-			roundCount++
-			roundActive = false
-		}
-	})
-	
-	
+function setTextValues(outcome) {
+	// set texts
+	roundInfo.innerHTML = `Round ${roundCount}: ${outcome}`
+	computerCounter.innerHTML = computerScore
+	playerCounter.innerHTML = playerScore
 }

@@ -69,6 +69,7 @@ h2 {
   justify-content: center;
   background-color: white;
   border-radius: 20px;
+  border: none;
   transition: transform ease 0.5s;
   cursor: pointer;
 }
@@ -82,14 +83,28 @@ h2 {
 
 .disabled {
   background-color: gray;
-  transform: scale(0.8);
+  transform: scale(0.9);
   cursor: not-allowed;
 }
 .disabled:hover {
-  transform: scale(0.8);
+  transform: scale(0.9);
+}
+#winnerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transition: opactiy ease 0.5s;
 }
 #winnerText {
   margin-top: 20px;
   text-decoration: underline;
+}
+#winnerContainer button {
+  margin-top: 20px;
+  padding: 10px 30px;
+  width: fit-content;
+  border: none;
+  font-weight: bold;
 }
 

@@ -30,20 +30,23 @@
         </div>    
       </div>
       <div id="buttonsWrapper">
-        <div class="buttonContainer" onclick="setPlayerChoice('rock')">
+        <button class="buttonContainer" onclick="setPlayerChoice('rock')">
           <img width="100px" src="assets/rock.svg" alt="">
           <p>Rock</p>
-        </div>
-        <div class="buttonContainer" onclick="setPlayerChoice('paper')">
+        </button>
+        <button class="buttonContainer" onclick="setPlayerChoice('paper')">
           <img width="100px" src="assets/paper.svg" alt="">
           <p>Paper</p>
-        </div>
-        <div class="buttonContainer" onclick="setPlayerChoice('scissors')">
+        </button>
+        <button class="buttonContainer" onclick="setPlayerChoice('scissors')">
           <img width="100px" src="assets/scissors.svg" alt="">
           <p>Scissors</p>
-        </div>
+        </button>
       </div>
-      <h2 id="winnerText"></h2>
+      <div id="winnerContainer">
+        <h2 id="winnerText">This will be the result</h2>
+       <button onclick="resetGame()">RESTART</button>
+      </div>
     </div>
   </div>
   <script src="script.js"></script>
