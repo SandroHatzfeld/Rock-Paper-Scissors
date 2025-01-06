@@ -55,7 +55,7 @@ function calculateRound(computerChoice, playerChoice) {
 		roundWinner = "Player"
 		return `${roundWinner} won! ${playerChoice} beats ${computerChoice}`
 	}
-
+	// check if computer won
 	if (
 		(computerChoice === "rock" && playerChoice === "scissors") ||
 		(computerChoice === "paper" && playerChoice === "rock") ||
@@ -67,7 +67,7 @@ function calculateRound(computerChoice, playerChoice) {
 	}
 }
 
-// add listener to animations & reset the round
+// add listener for the animation & reset the round
 hands[ 1 ].addEventListener("animationend", () => {
 	let computerChoice = getComputerChoice()
 	let outcome = calculateRound(computerChoice, playerChoice)
@@ -76,7 +76,7 @@ hands[ 1 ].addEventListener("animationend", () => {
 	hands[ 0 ].src = `assets/${computerChoice}_opponent.svg`
 	hands[ 1 ].src = `assets/${playerChoice}.svg`
 
-	
+	// set texts and enable the buttons, reset to fists
 	setTextValues(outcome)
 	toggleHandAnimation()
 	toggleButtons()
@@ -91,7 +91,8 @@ hands[ 1 ].addEventListener("animationend", () => {
 	}
 })
 
-function resetGame() {
+// reset the values when restart is pressed
+function restartGame() {
 	roundCount = 1
 	playerScore = 0
 	computerScore = 0
@@ -100,6 +101,7 @@ function resetGame() {
 	winnerText.parentElement.style.opacity = 0
 }
 
+//toggle animations of hands
 function toggleHandAnimation() {
 	// toggle animation class
 	for (let hand of hands) {
@@ -107,6 +109,7 @@ function toggleHandAnimation() {
 	}
 }
 
+//disable buttons
 function toggleButtons() {
 	// toggle disabled class on buttons
 	for (let button of playerButtons) {
@@ -114,8 +117,9 @@ function toggleButtons() {
 	}
 }
 
+
+// set texts
 function setTextValues(outcome) {
-	// set texts
 	roundInfo.innerHTML = `Round ${roundCount}: ${outcome}`
 	computerCounter.innerHTML = computerScore
 	playerCounter.innerHTML = playerScore
