@@ -3,13 +3,14 @@ const hands = document.getElementsByClassName("hand")
 const computerCounter = document.getElementById("computerCounter")
 const playerCounter = document.getElementById("playerCounter")
 const playerButtons = document.getElementsByClassName("buttonContainer")
+const winnerText = document.getElementById("winnerText")
 
 const computerCoice = [ "rock", "paper", "scissors" ]
 
 var roundCount = 1
 var playerScore = 0
 var computerScore = 0
-var playerChoice 
+var playerChoice
 var roundActive = false
 
 function setPlayerChoice(choice) {
@@ -17,11 +18,11 @@ function setPlayerChoice(choice) {
 		return
 	}
 	playerChoice = choice
-	
-	hands[0].src = `assets/rock_opponent.svg`
-	hands[1].src = `assets/rock.svg`
-	
-	if(playerScore < 3 || computerScore < 3) {
+
+	hands[ 0 ].src = `assets/rock_opponent.svg`
+	hands[ 1 ].src = `assets/rock.svg`
+
+	if (playerScore < 3 || computerScore < 3) {
 		playRound()
 	}
 	roundActive = true
@@ -67,33 +68,45 @@ function playRound() {
 }
 
 function createVisuals(computerChoice, playerChoice, outcome) {
+	//start animation
 	for (let hand of hands) {
 		hand.classList.add("animation")
 	}
+	//disable buttons
 	for (let button of playerButtons) {
 		button.classList.add("disabled")
 	}
 
-	
+	//wait for animation to finish
 	setTimeout(() => {
-		hands[0].src = `assets/${computerChoice}_opponent.svg`
-		hands[1].src = `assets/${playerChoice}.svg`
+		//set images
+		hands[ 0 ].src = `assets/${computerChoice}_opponent.svg`
+		hands[ 1 ].src = `assets/${playerChoice}.svg`
 
+		// set texts
 		roundInfo.innerHTML = `Round ${roundCount}: ${outcome}`
-
-		roundCount++
-		roundActive = false
-		
 		computerCounter.innerHTML = computerScore
 		playerCounter.innerHTML = playerScore
 
+		// remove animation class
 		for (let hand of hands) {
 			hand.classList.remove("animation")
 		}
+		// remove disabled class on buttons
 		for (let button of playerButtons) {
 			button.classList.remove("disabled")
 		}
-	
+
+		// set winner if any score is 3
+		if (computerScore === 3) {
+			winnerText.innerHTML = `Computer won after ${roundCount} rounds!`
+		} else if (playerScore === 3) {
+			winnerText.innerHTML = `Player won after ${roundCount} rounds!`
+		} else {
+			roundCount++
+			roundActive = false
+		}
+
 	}, 2000)
 }
 
