@@ -83,4 +83,7 @@ h2 {
   background-color: gray;
   transform: scale(0.8);
 }
+.disabled:hover {
+  transform: scale(0.8);
+}
 

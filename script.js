@@ -2,24 +2,29 @@ const roundInfo = document.getElementById("roundInfo")
 const hands = document.getElementsByClassName("hand")
 const computerCounter = document.getElementById("computerCounter")
 const playerCounter = document.getElementById("playerCounter")
-console.log(hands)
+const playerButtons = document.getElementsByClassName("buttonContainer")
 
 const computerCoice = [ "rock", "paper", "scissors" ]
 
 var roundCount = 1
 var playerScore = 0
 var computerScore = 0
-var playerChoice
+var playerChoice 
+var roundActive = false
 
-function userChoice(choice) {
+function setPlayerChoice(choice) {
+	if (roundActive) {
+		return
+	}
 	playerChoice = choice
-
+	
 	hands[0].src = `assets/rock_opponent.svg`
 	hands[1].src = `assets/rock.svg`
-
+	
 	if(playerScore < 3 || computerScore < 3) {
 		playRound()
 	}
+	roundActive = true
 }
 
 function getComputerChoice() {
@@ -29,10 +34,6 @@ function getComputerChoice() {
 	return computerCoice[ randomValue ]
 }
 
-// function play round
-// run random choice of computer and prompt player for input
-// compare computer to player
-// return outcome + what beat what
 
 function calculateRound(computerChoice, playerChoice) {
 	if (playerChoice === computerChoice) {
@@ -69,6 +70,9 @@ function createVisuals(computerChoice, playerChoice, outcome) {
 	for (let hand of hands) {
 		hand.classList.add("animation")
 	}
+	for (let button of playerButtons) {
+		button.classList.add("disabled")
+	}
 
 	
 	setTimeout(() => {
@@ -78,13 +82,18 @@ function createVisuals(computerChoice, playerChoice, outcome) {
 		roundInfo.innerHTML = `Round ${roundCount}: ${outcome}`
 
 		roundCount++
-
+		roundActive = false
+		
 		computerCounter.innerHTML = computerScore
 		playerCounter.innerHTML = playerScore
 
 		for (let hand of hands) {
 			hand.classList.remove("animation")
 		}
+		for (let button of playerButtons) {
+			button.classList.remove("disabled")
+		}
+	
 	}, 2000)
 }
 
