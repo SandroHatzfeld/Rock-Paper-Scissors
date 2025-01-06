@@ -3,94 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rock Paper Scissors
-  </title>
+  <title>Rock Paper Scissors</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <script>
-    // function play round
-    // run random choice of computer and prompt player for input
-    // compare computer to player
-    // return outcome + what beat what
-
-    var roundCount = 1
-    var humanScore = 0
-    var computerScore = 0
-    
-    function getComputerChoice() {
-      const max = 3
-      const randomValue = Math.ceil(Math.random() * max)
-      
-      return randomValue
-    }
-
-    function getPlayerChoice() {
-      let playerInput = prompt("Please enter 'Rock', 'Paper' or 'Scissors'")
-    
-      playerInput.toLowerCase()
-      
-      if (playerInput == "rock") {
-        return 1
-      } else if (playerInput == "paper") {
-        return 2
-      } else if (playerInput == "scissors") {
-        return 3
-      } else {
-        console.log("Please input the correct spelling")
-        
-        getPlayerChoice()
-        return
-      }
-      
-    }
-
-    function calculateRound(computerChoice, playerChoice) {
-      console.log(`Computer chose ${computerChoice == 1 ? "Rock": (computerChoice == 2 ? "Paper" : "Scissors")}`);
-      
-      if (playerChoice == computerChoice) {
-        console.log("Its a Tie! Nobody gets a point");
-        roundCount--
-      }
-      else if (playerChoice == 1 && computerChoice == 3) {
-        console.log("You Won! Rock beats Scissors");
-        humanScore++
-      } else if (playerChoice == 2 && computerChoice == 1) {
-        console.log("You Won! Paper beats Rock");
-        humanScore++
-      } else if (playerChoice == 3 && computerChoice == 2) {
-        console.log("You Won! Scissors beats Paper");
-        humanScore++
-      } else if (playerChoice == 3 && computerChoice == 1) {
-        console.log("You Lost! Rock beats Scissors");
-        computerScore++
-      } else if (playerChoice == 1 && computerChoice == 2) {
-        console.log("You Lost! Paper beats Rock");
-        computerScore++
-      } else if (playerChoice == 2 && computerChoice == 3) {
-        console.log("You Lost! Scissors beats Paper");
-        computerScore++
-      } 
-    }
-
-    function playRound() {
-      calculateRound(getComputerChoice(), getPlayerChoice())
-      console.log(`Current Score: Human ${humanScore} : Computer ${computerScore}`);
-      
-      console.log("____________________________________________");
-    }
-
-    function playGame() {
-      while(roundCount < 5) {
-        console.log("Current Round: " + roundCount);
-        playRound()
-        roundCount++
-        
-      }
-    }
-
-
-    playGame()
-
-  </script>
+  <div id="wrapper">
+    <div id="container">
+      <h1>Rock&nbsp;&nbsp;Paper&nbsp;&nbsp;Scissors</h1>
+      <h2 id="roundInfo">Round 1: Let's play!</h2>
+      <div id="playAreaWrapper">
+        <div id="playArea">
+          <div id="opponentHand" class="handWrapper"><img width="300px" src="assets/rock_opponent.svg" alt="" class="hand"></div>
+          <img width="120px" src="assets/VS.svg" alt="" id="versus">
+          <div id="playerHand" class="handWrapper"><img width="300px" src="assets/rock.svg" alt="" class="hand"></div>
+        </div>
+        <div id="counterContainer">
+          <div class="counter" id="computerCounter">
+            <p>0</p>
+          </div>
+          <div class="counter">
+            <p>:</p>
+          </div>
+          <div class="counter" id="playerCounter">
+            <p>0</p>
+          </div>
+        </div>    
+      </div>
+      <div id="buttonsWrapper">
+        <button class="buttonContainer" onclick="setPlayerChoice('rock')">
+          <img width="100px" src="assets/rock.svg" alt="">
+          <p>Rock</p>
+        </button>
+        <button class="buttonContainer" onclick="setPlayerChoice('paper')">
+          <img width="100px" src="assets/paper.svg" alt="">
+          <p>Paper</p>
+        </button>
+        <button class="buttonContainer" onclick="setPlayerChoice('scissors')">
+          <img width="100px" src="assets/scissors.svg" alt="">
+          <p>Scissors</p>
+        </button>
+      </div>
+      <div id="winnerContainer">
+        <h2 id="winnerText">This will be the result</h2>
+       <button onclick="resetGame()">RESTART</button>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
