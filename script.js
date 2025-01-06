@@ -4,8 +4,11 @@ const computerCounter = document.getElementById("computerCounter")
 const playerCounter = document.getElementById("playerCounter")
 const playerButtons = document.getElementsByClassName("buttonContainer")
 const winnerText = document.getElementById("winnerText")
+const computerHand = document.getElementById("computerHand")
+const playerHand = document.getElementById("playerHand")
 
-const computerCoice = [ "rock", "paper", "scissors" ]
+const computerCoice = [ "Rock", "Paper", "Scissors" ]
+
 
 var roundCount = 1
 var roundWinner
@@ -15,15 +18,14 @@ var playerChoice
 var roundActive = false
 
 
-
 function setPlayerChoice(choice) {
 	if (roundActive) {
 		return
 	}
 	playerChoice = choice
 
-	hands[ 0 ].src = `assets/rock_opponent.svg`
-	hands[ 1 ].src = `assets/rock.svg`
+	setActiveHand(computerHand, "Rock")
+	setActiveHand(playerHand, "Rock")
 
 	if (playerScore < 3 || computerScore < 3) {
 		toggleButtons()
@@ -42,39 +44,38 @@ function getComputerChoice() {
 
 function calculateRound(computerChoice, playerChoice) {
 	if (playerChoice === computerChoice) {
-		return "Its a Tie! Nobody gets a point"
+		return "Its a Tie! Nobody gets a point."
 	}
 
 	// check if player won
 	if (
-		(playerChoice === "rock" && computerChoice === "scissors") ||
-		(playerChoice === "paper" && computerChoice === "rock") ||
-		(playerChoice === "scissors" && computerChoice === "paper")
+		(playerChoice === "Rock" && computerChoice === "Scissors") ||
+		(playerChoice === "Paper" && computerChoice === "Rock") ||
+		(playerChoice === "Scissors" && computerChoice === "Paper")
 	) {
 		playerScore++
 		roundWinner = "Player"
-		return `${roundWinner} won! ${playerChoice} beats ${computerChoice}`
+		return `${roundWinner} won this round! ${playerChoice} beats ${computerChoice}.`
 	}
 	// check if computer won
 	if (
-		(computerChoice === "rock" && playerChoice === "scissors") ||
-		(computerChoice === "paper" && playerChoice === "rock") ||
-		(computerChoice === "scissors" && playerChoice === "paper")
+		(computerChoice === "Rock" && playerChoice === "Scissors") ||
+		(computerChoice === "Paper" && playerChoice === "Rock") ||
+		(computerChoice === "Scissors" && playerChoice === "Paper")
 	) {
 		computerScore++
 		roundWinner = "Computer"
-		return `${roundWinner} won! ${computerChoice} beats ${playerChoice}`
+		return `${roundWinner} won this round! ${computerChoice} beats ${playerChoice}.`
 	}
 }
 
 // add listener for the animation & reset the round
-hands[ 1 ].addEventListener("animationend", () => {
+hands[ 0 ].addEventListener("animationend", () => {
 	let computerChoice = getComputerChoice()
 	let outcome = calculateRound(computerChoice, playerChoice)
 
-	//set images
-	hands[ 0 ].src = `assets/${computerChoice}_opponent.svg`
-	hands[ 1 ].src = `assets/${playerChoice}.svg`
+	setActiveHand(computerHand, computerChoice)
+	setActiveHand(playerHand, playerChoice)
 
 	// set texts and enable the buttons, reset to fists
 	setTextValues(outcome)
@@ -123,4 +124,14 @@ function setTextValues(outcome) {
 	roundInfo.innerHTML = `Round ${roundCount}: ${outcome}`
 	computerCounter.innerHTML = computerScore
 	playerCounter.innerHTML = playerScore
+}
+
+function setActiveHand(target, hand) {
+	for (child of target.children) {
+		child.classList.remove("activeHand")
+
+		if (child.classList.contains(hand)) {
+			child.classList.add("activeHand")
+		}
+	}
 }

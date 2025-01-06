@@ -28,7 +28,23 @@ h2 {
 #playArea {
   gap: 20px;
 }
-#opponentHand {
+.handWrapper {
+  display: grid;
+  place-items: center;
+}
+.handWrapper svg {
+  grid-row: 1 ;
+  grid-column: 1;
+  width: 300px;
+}
+.hand {
+  opacity: 0;
+  transform-origin: 100% 100%;
+}
+.activeHand {
+  opacity: 1;
+}
+#computerHand {
   transform: rotate(90deg);
 }
 #playerHand {
@@ -36,9 +52,7 @@ h2 {
 }
 
 
-.hand {
-  transform-origin: 100% 100%;
-}
+
 .animation {
   animation: roundStart 0.7s ease-out 3 forwards;
   animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000)  ;
